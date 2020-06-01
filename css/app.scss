@@ -1,7 +1,46 @@
+@import "reset";
+@import "typography";
+
 // Variables
-$primary-color: red;
+$primary-color: #f70201;
+$body-font: "Jost";
+$body-size: 24px;
+$mq-large: 800px;
+$mq-med: 600px;
+
+// Mixins
+@mixin mq($width) {
+  @media (max-width: $width) {
+    @content;
+  }
+}
+
+@mixin vert-middle() {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
 
 body {
+  font-size: $body-size;
   background-color: $primary-color;
   color: #fff;
+  font-family: $body-font;
+  line-height: 1.5;
+  height: 100vh;
+  @include vert-middle();
+}
+
+section {
+  width: 500px;
+
+  @include mq($mq-med) {
+    width: 350px;
+    font-size: 16px;
+  }
+
+  p {
+    margin: 24px 0;
+  }
 }
