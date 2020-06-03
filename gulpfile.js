@@ -8,6 +8,8 @@ const browserSync = require("browser-sync").create();
 
 sass.compiler = require("node-sass");
 
+const ghpages = require("gh-pages");
+
 function sassTask() {
   return gulp
     .src("src/css/app.scss")
@@ -48,7 +50,12 @@ function watch() {
   gulp.watch("src/img/*", img);
 }
 
+function deploy() {
+  ghpages.publish("dist");
+}
+
 exports.default = gulp.series(html, sassTask, fonts, img, watch);
+exports.deploy = deploy;
 
 // Gulp V4.0
 
