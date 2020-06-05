@@ -1,25 +1,34 @@
 const gulp = require("gulp");
-const sass = require("gulp-sass");
+const postCss = require("gulp-postcss");
 const cleanCss = require("gulp-clean-css");
 const sourcemaps = require("gulp-sourcemaps");
 const imageMin = require("gulp-imagemin");
+const concat = require("gulp-concat");
 
 const browserSync = require("browser-sync").create();
 
-sass.compiler = require("node-sass");
-
 const ghpages = require("gh-pages");
 
-function sassTask() {
+function css() {
   return gulp
-    .src("src/css/app.scss")
+    .src(["src/css/reset.css", "src/css/typography.css", "src/css/app.css"])
     .pipe(sourcemaps.init())
-    .pipe(sass())
+    .pipe(
+      postCss([
+        require("autoprefixer"),
+        require("postcss-preset-env")({
+          stage: 1,
+          browsers: ["IE 11", "last 2 versions"],
+        }),
+      ])
+    )
+    .pipe(concat("app.css"))
     .pipe(
       cleanCss({
         compatibility: "ie8",
       })
     )
+
     .pipe(sourcemaps.write())
     .pipe(gulp.dest("dist"))
     .pipe(browserSync.stream());
@@ -45,7 +54,7 @@ function watch() {
     notify: false, // Turn off banner
   });
   gulp.watch("src/*.html", html).on("change", browserSync.reload);
-  gulp.watch("src/css/**/*.scss", sassTask);
+  gulp.watch("src/css/**/*.css", css);
   gulp.watch("src/fonts/*", fonts);
   gulp.watch("src/img/*", img);
 }
@@ -54,7 +63,7 @@ function deploy() {
   ghpages.publish("dist");
 }
 
-exports.default = gulp.series(html, sassTask, fonts, img, watch);
+exports.default = gulp.series(html, css, fonts, img, watch);
 exports.deploy = deploy;
 
 // Gulp V4.0
