@@ -54,18 +54,15 @@ section.hero {
   color: var(--text-on-dark);
   text-align: center;
   text-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-  background-image: image-set(
-    "./img/rainbow.jpg" 1x,
-    "./img/rainbow@2x.jpg" 2x
-  );
+  background-image: image-set("img/rainbow.jpg" 1x, "img/rainbow@2x.jpg" 2x);
   background-size: cover;
   background-position: center;
 }
 
 section.hero.menu {
   background-image: image-set(
-    "./img/green-wall.jpg" 1x,
-    "./img/green-wall@2x.jpg" 2x
+    "img/green-wall.jpg" 1x,
+    "img/green-wall@2x.jpg" 2x
   );
   background-size: cover;
   background-position: center;
