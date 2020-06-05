@@ -60,7 +60,7 @@ function watch() {
 }
 
 function deploy() {
-  ghpages.publish("dist");
+  return ghpages.publish("dist");
 }
 
 exports.default = gulp.series(html, css, fonts, img, watch);
